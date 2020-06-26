@@ -74,6 +74,25 @@ EXPOSE 8080
 
 - save it
 
+```
+count=$(ls | grep .php | wc -l)
+if [[ $count -gt 0 ]]
+then
+cp -vr * /home/php
+exit 0
+else
+exit 1
+fi
+
+count=$(ls | grep .php | wc -l)
+if [[ $count == 0 ]]
+then
+cp -vr * /home/html
+exit 0
+else
+exit 1
+fi
+```
 ### Job2 : By looking at the code or program file, Jenkins should automatically start the respective language interpreter install image container to deploy code ( eg. If code is of  PHP, then Jenkins should start the container that has PHP already installed ).
 
 - go to job 2 -> click on configure
@@ -87,6 +106,25 @@ EXPOSE 8080
 ![checking the format](/pictures/5_Task2.PNG)
 
 - apply and save
+```
+count=$(ls /var/lib/jenkins/workspace/job1_pull_repository_build_image_push_dockerhub | grep .php | wc -l)
+if [[ $count -gt 0 ]]
+then
+if kubectl get deployment | grep php
+then
+exit 0
+else
+kubectl create -f /home/php-deployment.yml
+fi
+else
+if kubectl get deployment | grep http
+then
+exit 0
+else
+kubectl create -f /home/http-deployment.yml
+fi
+fi
+```
 
 ### 6.	Job3 : Test your app if it  is working or not.
 - add the code in execute shell
@@ -95,4 +133,25 @@ EXPOSE 8080
 
 - apply and save
 
+```
+sleep 5
+status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600)
+if [[ $status == 200 ]]
+then
+echo "web application working"
+else
+echo "web application is not working"
+fi
+```
 
+
+
+```
+status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600)
+if [[ $status == 200 ]]
+then
+exit 0
+else
+exit 1
+fi
+```
