@@ -2,10 +2,11 @@
 automation is required everywhere create and test a deployment using kubernetes orchestration tool and jenkins pipeline.
 
 ## Steps:
-### 1.	Create container image that’s has Jenkins installed  using dockerfile and 2.	When we launch this image, it should automatically starts Jenkins service in the container.
-
+to create it firstly we need to create container image that’s has Jenkins installed using dockerfile and that image must be configured in such a way that whenever we launch this image, it should automatically starts Jenkins service in the container. following script is the Dockerfile sctipt to build image
+ 
 - Dockerfile of jenkins-k8s
 **Note:**- add your minikube credential
+
 ```
 FROM centos
 RUN yum install wget -y
@@ -32,39 +33,31 @@ EXPOSE 8080
 ```
 
 
-- run the following command to build the jenkins image. **you can change the image name in my case I am using 'adamayasharma/jenkins-k8s' image name
-
+run the following command to build the jenkins image. **you can change the image name in my case I am using 'adamayasharma/jenkins-k8s' image name
 
 `docker build -t adamayasharma/jenkins-k8s .`
 
-- run the docker container of build image. **I am mounting /root/devops/Task_3_perform_the_same_task2_with_k8s to container at /home because my deployment yml scripts are situateed in /root/devops/Task_3_perform_the_same_task2_with_k8s folder**
+run the docker container of build image. **I am mounting /root/devops/Task_3_perform_the_same_task2_with_k8s to container at /home because my deployment yml scripts are situateed in /root/devops/Task_3_perform_the_same_task2_with_k8s folder**. in your case mount your directory where your yml files are situated.
 
 `docker container run -dit -p 8085:8080 --name jenkins-k8s  -v /root/devops/Task_3_perform_the_same_task2_with_k8s:/home adamayasharma/jenkins-k8s`
 
-- open link in web address bar `<ip of VM>:8085`
+open link in web address bar `<ip of VM>:8085`
 
-- to see the password of jenkins run command.
+to see the password of jenkins run command.
 
 `docker exec <name> cat /var/lib/jenkins/secrets/initialAdminPassword`
 
-- login and configure the jenkins.
+login and configure the jenkins.
 
 
-###  Job1 : Pull  the Github repo automatically when some developers push repo to Github.
+**Now we will build the jobs in jenkins**
+- In Job1 we will Pull the Github repo automatically when some developers push repo to Github and build and push the docker image to the docker hub registry.for that you need to download and install github and docker plugins from plugins manager. 
 
-- go to plugin managerand install github plugins.
+after installing the plugins go to job1, click on configure and  do as given in images.
 
-- go to job1 -> click on configure
-
-- now do as given in images.
 ![job1_1](/images/job1_1.JPG)
 ![job1_2](/images/job1_2.JPG)
 ![job1_3](/images/job1_3.JPG)
-![job1_4](/images/job1_4.JPG)
-![job1_5](/images/job1_5.JPG)
-![job1_6](/images/job1_6.JPG)
-
-- save it
 
 ```
 count=$(ls | grep .php | wc -l)
@@ -75,7 +68,12 @@ exit 0
 else
 exit 1
 fi
+```
 
+![job1_4](/images/job1_4.JPG)
+![job1_5](/images/job1_5.JPG)
+
+```
 count=$(ls | grep .php | wc -l)
 if [[ $count == 0 ]]
 then
@@ -85,6 +83,12 @@ else
 exit 1
 fi
 ```
+
+![job1_6](/images/job1_6.JPG)
+
+- save it
+
+
 ### Job2 : By looking at the code or program file, Jenkins should automatically start the respective language interpreter install image container to deploy code ( eg. If code is of  PHP, then Jenkins should start the container that has PHP already installed ).
 
 - go to job 2 -> click on configure
