@@ -166,5 +166,5 @@ create a delivery pipeline and execute the jobs in serial order.
 ![pipeline](/images/pipeline.JPG)
 
 ## Common problems that may occur
-- docker plugin must be configured in your jenkins cloud. If it is not check this [READMD_file]()
-- if email notifications are not working then then use this [link] to configure the email service.
+- docker plugin must be configured in your jenkins cloud. If it is not check this [READMD_file](readme/README.md)
+- if email notifications are not working then then use this [link](https://www.youtube.com/watch?v=DULs4Wq4xMg) to configure the email service.
