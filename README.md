@@ -35,30 +35,29 @@ EXPOSE 8080
 
 run the following command to build the jenkins image. **you can change the image name in my case I am using 'adamayasharma/jenkins-k8s' image name
 
-`docker build -t adamayasharma/jenkins-k8s .`
+- `docker build -t adamayasharma/jenkins-k8s .`
 
 run the docker container of build image. **I am mounting /root/devops/Task_3_perform_the_same_task2_with_k8s to container at /home because my deployment yml scripts are situateed in /root/devops/Task_3_perform_the_same_task2_with_k8s folder**. in your case mount your directory where your yml files are situated.
 
-`docker container run -dit -p 8085:8080 --name jenkins-k8s  -v /root/devops/Task_3_perform_the_same_task2_with_k8s:/home adamayasharma/jenkins-k8s`
+- `docker container run -dit -p 8085:8080 --name jenkins-k8s  -v /root/devops/Task_3_perform_the_same_task2_with_k8s:/home adamayasharma/jenkins-k8s`
 
 open link in web address bar `<ip of VM>:8085`
 
 to see the password of jenkins run command.
 
-`docker exec <name> cat /var/lib/jenkins/secrets/initialAdminPassword`
+- `docker exec <name> cat /var/lib/jenkins/secrets/initialAdminPassword`
 
 login and configure the jenkins.
 
 
-**Now we will build the jobs in jenkins**
-- In Job1 we will Pull the Github repo automatically when some developers push repo to Github and build and push the docker image to the docker hub registry.for that you need to download and install github and docker plugins from plugins manager. 
+### **Now we will build the jobs in jenkins**
+In Job1 we will Pull the Github repo automatically when some developers push repo to Github and build and push the docker image to the docker hub registry.for that you need to download and install github and docker plugins from plugins manager. after installing the plugins go to job1, click on configure and  do as given in images.
 
-after installing the plugins go to job1, click on configure and  do as given in images.
-
+this will download the repository from github.
 ![job1_1](/images/job1_1.JPG)
 ![job1_2](/images/job1_2.JPG)
-![job1_3](/images/job1_3.JPG)
 
+this shell script identify the programming language of downloaded code. 
 ```
 count=$(ls | grep .php | wc -l)
 if [[ $count -gt 0 ]]
@@ -70,7 +69,12 @@ exit 1
 fi
 ```
 
+![job1_3](/images/job1_3.JPG)
+
+If the programming language is php then it will build an php docker image and push it to docker hub.
+
 ![job1_4](/images/job1_4.JPG)
+
 ![job1_5](/images/job1_5.JPG)
 
 ```
