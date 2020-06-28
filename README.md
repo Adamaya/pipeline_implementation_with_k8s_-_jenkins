@@ -51,7 +51,7 @@ login and configure the jenkins.
 
 
 ### **Now we will build the jobs in jenkins**
-In Job1 we will Pull the Github repo automatically when some developers push repo to Github and build and push the docker image to the docker hub registry.for that you need to download and install github and docker plugins from plugins manager. after installing the plugins go to job1, click on configure and  do as given in images.
+- In Job1 we will Pull the Github repo automatically when some developers push repo to Github and build and push the docker image to the docker hub registry.for that you need to download and install github and docker plugins from plugins manager. after installing the plugins go to job1, click on configure and **do as given in images**.
 
 this will download the repository from github.
 ![job1_1](/images/job1_1.JPG)
@@ -71,12 +71,11 @@ fi
 
 ![job1_3](/images/job1_3.JPG)
 
-If the programming language is php then it will build an php docker image and push it to docker hub.
+If the programming language is php then it will build an php docker image and push it to docker hub otherwise it won't work.
 
 ![job1_4](/images/job1_4.JPG)
 
-![job1_5](/images/job1_5.JPG)
-
+this shell script identify the programming language of downloaded code.
 ```
 count=$(ls | grep .php | wc -l)
 if [[ $count == 0 ]]
@@ -88,52 +87,51 @@ exit 1
 fi
 ```
 
+![job1_5](/images/job1_5.JPG)
+
+If the programming language is html then it will build a httpd docker image and push it to docker hub otherwise it won't work.
+
 ![job1_6](/images/job1_6.JPG)
 
-- save it
+save it
 
 
-### Job2 : By looking at the code or program file, Jenkins should automatically start the respective language interpreter install image container to deploy code ( eg. If code is of  PHP, then Jenkins should start the container that has PHP already installed ).
+- In Job2 looking at the code or program file, Jenkins automatically start the respective language interpreter install image container to deploy code ( eg. If code is of  PHP, then Jenkins wil start the container that has PHP already installed ) over the kubernetes. for the your kubernetes cluster must running.
 
-- go to job 2 -> click on configure
-
-- no do as given in image.
+for configuring the job go to job 2 , click on configure and do same as given in image.
 
 ![job1_1](/images/job2_1.JPG)
-![job1_2](/images/job2_2.JPG)
 
-- add the code
-
-- apply and save
+this code automatically deploy your images over the kubernetes according to the matched condition.
 ```
 count=$(ls /var/lib/jenkins/workspace/job1_pull_repository_build_image_push_dockerhub | grep .php | wc -l)
 if [[ $count -gt 0 ]]
 then
-if kubectl get deployment | grep php
-then
-exit 0
+  if kubectl get deployment | grep php
+  then
+    exit 0
+  else
+    kubectl create -f /home/php-deployment.yml
+  fi
 else
-kubectl create -f /home/php-deployment.yml
-fi
-else
-if kubectl get deployment | grep http
-then
-exit 0
-else
-kubectl create -f /home/http-deployment.yml
-fi
+  if kubectl get deployment | grep http
+  then
+    exit 0
+  else
+    kubectl create -f /home/http-deployment.yml
+  fi
 fi
 ```
 
-### 	Job3 : Test your app if it  is working or not.
-- add the code in execute shell
+![job1_2](/images/job2_2.JPG)
+
+save it
+
+- In job Job3 we will Test our app if it is working or not.
 
 ![job3_1](/images/job3_1.JPG)
-![job3_2](/images/job3_2.JPG)
 
-
-- apply and save
-
+This script will check that the website is working or not.
 ```
 sleep 5
 status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600)
@@ -145,8 +143,12 @@ echo "web application is not working"
 fi
 ```
 
+![job3_2](/images/job3_2.JPG)
 
 
+apply and save
+
+- In Job 4 dow
 ```
 status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600)
 if [[ $status == 200 ]]
@@ -158,4 +160,11 @@ fi
 ```
 
 ## how to test
-[pipeline](/images/pipeline.JPG)
+
+create a delivery pipeline and execute the jobs in serial order. 
+
+![pipeline](/images/pipeline.JPG)
+
+## Common problems that may occur
+- docker plugin must be configured in your jenkins cloud. If it is not check this [READMD_file]()
+- if email notifications are not working then then use this [link] to configure the email service.
