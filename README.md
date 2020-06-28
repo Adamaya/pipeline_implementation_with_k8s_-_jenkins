@@ -163,7 +163,7 @@ fi
 
 create a delivery pipeline and execute the jobs in serial order. 
 
-![pipeline](/images/pipeline.JPG)
+![pipeline](/images/pipline.JPG)
 
 ## Common problems that may occur
 - docker plugin must be configured in your jenkins cloud. If it is not check this [READMD_file](readme/README.md)
