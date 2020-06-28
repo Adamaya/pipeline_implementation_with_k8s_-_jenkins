@@ -59,6 +59,10 @@ EXPOSE 8080
 - now do as given in images.
 ![job1_1](/images/job1_1.JPG)
 ![job1_2](/images/job1_2.JPG)
+![job1_3](/images/job1_3.JPG)
+![job1_4](/images/job1_4.JPG)
+![job1_5](/images/job1_5.JPG)
+![job1_6](/images/job1_6.JPG)
 
 - save it
 
@@ -87,11 +91,10 @@ fi
 
 - no do as given in image.
 
-![checking the format](/pictures/4_Task2.PNG)
+![job1_1](/images/job2_1.JPG)
+![job1_2](/images/job2_2.JPG)
 
 - add the code
-
-![checking the format](/pictures/5_Task2.PNG)
 
 - apply and save
 ```
@@ -114,10 +117,12 @@ fi
 fi
 ```
 
-### 6.	Job3 : Test your app if it  is working or not.
+### 	Job3 : Test your app if it  is working or not.
 - add the code in execute shell
 
-![](/pictures/11_Task2.PNG)
+![job3_1](/images/job3_1.JPG)
+![job3_2](/images/job3_2.JPG)
+
 
 - apply and save
 
@@ -143,3 +148,6 @@ else
 exit 1
 fi
 ```
+
+## how to test
+[pipeline](/images/pipeline.JPG)
