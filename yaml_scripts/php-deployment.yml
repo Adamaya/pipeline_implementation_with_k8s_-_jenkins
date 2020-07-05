@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: php-pv-claim
+  labels:
+    app: php
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: php
+  labels:
+    app: php
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: php
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: php
+        tier: frontend
+    spec:
+      containers:
+      - image: adamayasharma/php-webserver
+        name: php
+        ports:
+        - containerPort: 80
+          name: php
+        volumeMounts:
+        - name: php-persistent-storage
+          mountPath: /var/log/httpd
+      volumes:
+      - name: php-persistent-storage
+        persistentVolumeClaim:
+          claimName: php-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-service
+  labels:
+    app: php
+spec:
+  selector:
+    app: php
+  type: NodePort
+  ports:
+    - nodePort: 30600
+      port: 80
+      targetPort: 80
