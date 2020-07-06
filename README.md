@@ -152,9 +152,9 @@ for notifications
 apply and save
 
 - In Job 4 we are gonna redeploy the webserver if it won't work.
-![job4_1](/images/job3_2.JPG)
-![job4_2](/images/job3_2.JPG)
-![job4_3](/images/job3_2.JPG)
+![job4_1](/images/job4_1.JPG)
+![job4_2](/images/job4_2.JPG)
+![job4_3](/images/job4_3.JPG)
 ## how to test
 
 create a build pipeline and execute the jobs in serial order. 
