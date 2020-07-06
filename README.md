@@ -1,5 +1,6 @@
-# pipeline_implementation_with_k8s_-_jenkins
-automation is required everywhere create and test a deployment using kubernetes orchestration tool and jenkins pipeline.
+# DevOps Activity: create a pipeline to build, deploy, and monitor the web application using Jenkins, docker and k8s.
+Automation is required everywhere therefore in this activity we are going to create an Automation Pipeline to deploy the website created by the developers and monitor it through complete automation.
+In this activity, we are gonna integrate git, Jenkins, Docker, and Kubernetes.
 
 ## Steps:
 to create it firstly we need to create container image that’s has Jenkins installed using dockerfile and that image must be configured in such a way that whenever we launch this image, it should automatically starts Jenkins service in the container. following script is the Dockerfile sctipt to build image
