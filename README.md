@@ -145,23 +145,19 @@ fi
 
 ![job3_2](/images/job3_2.JPG)
 
+for notifications
+![job3_3](/images/job3_3.JPG)
+
 
 apply and save
 
-- In Job 4 dow
-```
-status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600)
-if [[ $status == 200 ]]
-then
-exit 0
-else
-exit 1
-fi
-```
-
+- In Job 4 we are gonna redeploy the webserver if it won't work.
+![job4_1](/images/job3_2.JPG)
+![job4_2](/images/job3_2.JPG)
+![job4_3](/images/job3_2.JPG)
 ## how to test
 
-create a delivery pipeline and execute the jobs in serial order. 
+create a build pipeline and execute the jobs in serial order. 
 
 ![pipeline](/images/pipline.JPG)
 
